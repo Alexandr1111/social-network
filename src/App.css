@@ -8,21 +8,7 @@
                        "nav content";
 }
 
-header.header {
-  grid-area: header;
-  background: green;
-}
-
-header.header img {
-  width: 20px;
-}
-
-nav.nav {
-  grid-area: nav;
-  background: burlywood;
-}
-
-div.content {
+div.app-wrapper-content {
   grid-area: content;
   background: cornflowerblue;
 }

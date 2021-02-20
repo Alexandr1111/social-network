@@ -1,0 +1,12 @@
+nav.nav {
+    grid-area: nav;
+    background: burlywood;
+}
+
+.item {
+    color: white;
+}
+
+.item a {
+    color: inherit;
+}
