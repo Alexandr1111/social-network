@@ -1,17 +1,12 @@
 import React from "react";
-import c from "./Profile.module.css";
 import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = () => {
+const Profile = ({posts, newPostText, dispatch}) => {
     return (
         <div>
-            <div>
-                <img src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt=""/>
-            </div>
-            <div>
-                ava + description
-            </div>
-            <MyPosts/>
+            <ProfileInfo />
+            <MyPosts posts={posts} dispatch={dispatch} newPostText={newPostText} />
         </div>
     )
 }

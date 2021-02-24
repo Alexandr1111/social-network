@@ -8,15 +8,15 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 
-const App = () => {
+const App = ({state, dispatch}) => {
   return (
       <Router>
           <div className='app-wrapper'>
               <Header />
               <Navbar />
               <div className='app-wrapper-content'>
-                  <Route path='/dialogs' component={Dialogs} />
-                  <Route path='/profile' component={Profile} />
+                  <Route exact path='/dialogs' render={() => <Dialogs data={state.dialogsPage} newMessageText={state.dialogsPage.newMessageText} dispatch={dispatch} />} />
+                  <Route path='/profile' render={() => <Profile posts={state.profilePage.posts} dispatch={dispatch} newPostText={state.profilePage.newPostText} />} />
                   <Route path='/news' component={News} />
                   <Route path='/music' component={Music} />
               </div>

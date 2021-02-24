@@ -3,10 +3,11 @@ nav.nav {
     background: burlywood;
 }
 
-.item {
+.item a {
     color: white;
+    text-decoration: none;
 }
 
-.item a {
-    color: inherit;
+.item a.active {
+    color: gold;
 }

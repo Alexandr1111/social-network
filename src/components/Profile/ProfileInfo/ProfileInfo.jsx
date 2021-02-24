@@ -1,0 +1,17 @@
+import React from "react";
+import c from "./ProfileInfo.module.css";
+
+const ProfileInfo = () => {
+    return (
+        <div>
+            <div>
+                <img src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt="" />
+            </div>
+            <div className={c.descriptionBlock}>
+                ava + description
+            </div>
+        </div>
+    )
+}
+
+export default ProfileInfo;

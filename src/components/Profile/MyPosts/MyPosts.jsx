@@ -1,18 +1,34 @@
-import React from "react";
+import React, { createRef } from "react";
 import c from "./MyPosts.module.css";
 import Post from "./Post/Post";
+import { addPostActionCreator, updateNewPostTextActionCreator } from "../../../redux/state";
 
-const MyPosts = () => {
+const MyPosts = ({posts, newPostText, dispatch}) => {
+
+    const newPostElement = createRef();
+
+    const onAddPost = () => {
+        dispatch(addPostActionCreator());   // нарушается принцип single responsibility. Компонент не должен думать над тем какой-объект создать как {type:ADD-POST}
+    }
+
+    const onPostChange = () => {
+        const text = newPostElement.current.value;
+        dispatch(updateNewPostTextActionCreator(text));
+    }
+
     return (
-        <div>
-            My posts
+        <div className={c.postsBlock}>
+            <h3>My posts</h3>
             <div>
-                <textarea></textarea>
-                <button>Add post</button>
+                <div>
+                    <textarea ref={newPostElement} onChange={onPostChange} value={newPostText} />
+                </div>
+                <div>
+                    <button onClick={onAddPost}>Add post</button>
+                </div>
             </div>
             <div className={c.posts}>
-                <Post message={'Хай, это мой первый пост!'} likeCount={4} />
-                <Post message={'Новая Зеландия, жди меня!♥'} likeCount={18} />
+                {posts.map(p => <Post message={p.message} likeCount={p.likeCount} />)}
             </div>
         </div>
     )
