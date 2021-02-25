@@ -1,19 +1,18 @@
 import React, { createRef } from "react";
 import c from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import { addPostActionCreator, updateNewPostTextActionCreator } from "../../../redux/profile-reducer";
 
-const MyPosts = ({posts, newPostText, dispatch}) => {
+const MyPosts = ({posts, newPostText, addPost, updateNewPostText}) => {
 
     const newPostElement = createRef();
 
     const onAddPost = () => {
-        dispatch(addPostActionCreator());   // нарушается принцип single responsibility. Компонент не должен думать над тем какой-объект создать как {type:ADD-POST}
+        addPost();
     }
 
     const onPostChange = () => {
         const text = newPostElement.current.value;
-        dispatch(updateNewPostTextActionCreator(text));
+        updateNewPostText(text);
     }
 
     return (
