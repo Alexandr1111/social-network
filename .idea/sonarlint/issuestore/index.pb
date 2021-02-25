@@ -67,3 +67,9 @@ L
 src/redux/dialogs-reducer.js,c\e\cebebab9aa6ef20b437c8400344547b47a967a2f
 H
 src/redux/redux-store.js,6\9\69d3eedf21bb341c8cdddd29a9bb2879c977736b
+[
++src/components/Dialogs/DialogsContainer.jsx,3\b\3beb619d8ae951acdcd55fa566d16722684ea854
+C
+src/StoreContext.js,8\9\89d02f7be451398779fa62ecfa624d27b31c0e30
+c
+3src/components/Profile/MyPosts/MyPostsContainer.jsx,c\b\cb4b5a8481e171cf786839b1bf124e1ece658a55
