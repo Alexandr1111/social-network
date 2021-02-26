@@ -1,30 +1,28 @@
-import React from "react";
 import Dialogs from "./Dialogs";
 import { sendMessageCreator, updateMessageBodyCreator } from "../../redux/dialogs-reducer";
-import StoreContext from "../../StoreContext";
+import { connect } from "react-redux";
 
-const DialogsContainer = () => {
-
-    return (
-        // если на одной строке после <StoreContext.Consumer> будет фигурная скобка-выкинет ошибку, баг реакта !
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    const state = store.getState().dialogsPage;
-
-                    const onSendMessageClick = () => {
-                        store.dispatch(sendMessageCreator());
-                    }
-
-                    const onNewMessageChange = body => {
-                        store.dispatch(updateMessageBodyCreator(body))
-                    }
-
-                    return <Dialogs dialogsPage={state} sendMessage={onSendMessageClick} updateNewMessageBody={onNewMessageChange} />
-                }
-            }
-        </StoreContext.Consumer>
-    )
+const mapStateToProps = state => {
+    // state === store.getState()
+    return {
+        dialogsPage: state.dialogsPage
+    }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateNewMessageBody: body => {
+            dispatch(updateMessageBodyCreator(body))
+        },
+        sendMessage: () => {
+            dispatch(sendMessageCreator())
+        }
+    }
+}
+
+// Создаёт контейнерную компоненту SuperDialogsContainer, которая рендерит презент. компоненту Dialogs и внутрь Dialogs
+// в качестве пропсов передаёт объект возвращаемый из f1() и f2(). f1-пропсы, f2-колбэки
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+// connect подписывается на изменение стейта, когда он меняется заново вызывается f1() и формируется новый объект, сравниваясь со старым
 
 export default DialogsContainer;

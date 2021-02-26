@@ -18,10 +18,10 @@ const Dialogs = ({dialogsPage, updateNewMessageBody, sendMessage}) => {
     return (
         <div className={c.dialogs}>
             <div className={c.dialogsItems}>
-                {dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id} />)}
+                {dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id} />)}
             </div>
             <div className={c.messages}>
-                {dialogsPage.messages.map(m => <Message message={m.message} />)}
+                {dialogsPage.messages.map(m => <Message message={m.message} key={m.id} />)}
             </div>
             <div>
                 <textarea ref={newMessageElement} onChange={onNewMessageChange} value={dialogsPage.newMessageBody} />
