@@ -81,3 +81,7 @@ A
 src/setupTests.js,b\7\b7e8d8f421068b8d51c89805d2035e747be2ff17
 F
 src/reportWebVitals.js,1\c\1ce5e63ae1582ed0b425c46001299a07515efbf9
+U
+%src/components/Users/Users.module.css,0\f\0ff6b304203790248e25fbda49de243d629700e7
+W
+'src/components/Users/UsersContainer.jsx,c\2\c2af2c484336541a02647fbf8749d387a2e12cae
