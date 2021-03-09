@@ -1,12 +1,12 @@
 import c from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, users, follow, unfollow}) => {
 
     const pagesCount = Math.ceil(totalUsersCount / pageSize);   // При totalUsersCount 19 и pageSize 5 не теряются последние пользователи
     let pages = [];
-    console.log(totalUsersCount)
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
@@ -21,7 +21,9 @@ const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, users, fo
                     <div>
                         <span>
                             <div>
-                                <img src={u.photos.small ? u.photos.small : userPhoto} alt="" className={c.userPhoto} />
+                                <NavLink to={`/profile/${u.id}`}>
+                                    <img src={u.photos.small ? u.photos.small : userPhoto} alt="" className={c.userPhoto} />
+                                </NavLink>
                             </div>
                             <div>
                                 {u.followed

@@ -41,16 +41,16 @@ class UsersContainer extends Component {
             <>
                 {isFetching ? <Preloader /> : null}
 
-                    <Users
-                        totalUsersCount={totalUsersCount}
-                        pageSize={pageSize}
-                        currentPage={currentPage}
-                        users={users}
-                        onPageChanged={this.onPageChanged}
-                        follow={follow}
-                        unfollow={unfollow}
-                        isFetching={isFetching}
-                    />
+                <Users
+                    totalUsersCount={totalUsersCount}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    users={users}
+                    onPageChanged={this.onPageChanged}
+                    follow={follow}
+                    unfollow={unfollow}
+                    isFetching={isFetching}
+                />
             </>
         )
     }
