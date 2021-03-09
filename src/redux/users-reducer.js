@@ -1,18 +1,16 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET-USERS';
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
-const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
+const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 const initialState = {
-    users: [
-        // {id: 1, photoUrl: 'https://i.pinimg.com/originals/29/ee/44/29ee44185cf69f20f11291716a93dc37.jpg', followed: false, fullName: "Alex", status: "Hi there", location: {city: "Moscow", country: "Russia"}},
-        // {id: 2, photoUrl: 'https://i.pinimg.com/originals/9a/da/3b/9ada3bc305a1f45eab527f60da172d53.png', followed: true, fullName: "Sveta", status: "Life is good!", location: {city: "Kiev", country: "Ukraine"}},
-        // {id: 3, photoUrl: 'https://99px.ru/sstorage/41/2010/05/image_410705101709499256168.jpg', followed: false, fullName: "Vika", status: "learn redux, guys xD", location: {city: "Rostov", country: "Russia"}}
-    ],
+    users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 2
+    currentPage: 2,
+    isFetching: false
 }
 
 const usersReducer = ( state = initialState, action ) => {
@@ -52,6 +50,11 @@ const usersReducer = ( state = initialState, action ) => {
                 ...state,
                 totalUsersCount: action.count
             };
+        case TOGGLE_IS_FETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching
+            };
         default:
             return state;
     }
@@ -85,6 +88,12 @@ export const setCurrentPageAC = currentPage => {
 export const setUsersTotalCountAC = totalUsersCount => {
     return {
         type: SET_TOTAL_USERS_COUNT, count: totalUsersCount
+    }
+}
+
+export const toggleIsFetchingAC = isFetching => {
+    return {
+        type: TOGGLE_IS_FETCHING, isFetching
     }
 }
 
