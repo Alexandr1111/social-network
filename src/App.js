@@ -16,7 +16,7 @@ const App = () => {
           <Navbar />
           <div className='app-wrapper-content'>
               <Route exact path='/dialogs' render={() => <DialogsContainer />} />
-              <Route path='/profile' render={() => <ProfileContainer />} />
+              <Route path='/profile/:userId?' render={() => <ProfileContainer />} /> {/*теперь /profile без парамаетра не открывается, указываем что он не обязателен*/}
               <Route path='/users' render={() => <UsersContainer />} />
               <Route path='/news' component={News} />
               <Route path='/music' component={Music} />

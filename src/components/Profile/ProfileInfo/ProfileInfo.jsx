@@ -9,7 +9,9 @@ const ProfileInfo = ({profile}) => {
             </div>
             <div className={c.descriptionBlock}>
                 <img src={profile.photos.large} alt="" />
-                ava + description
+                <div>
+                    {profile.fullName}
+                </div>
             </div>
         </div>
     )
