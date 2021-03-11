@@ -29,4 +29,4 @@ const mapStateToProps = state => {
 
 const WithURLDataContainerComponent = withRouter(ProfileContainer); // HOC(компонент, который возвращает новый компонент) занимается закидыванием данных из урла
 
-export default connect(mapStateToProps, { setUserProfile })(WithURLDataContainerComponent);
+export default connect( mapStateToProps, { setUserProfile } )(WithURLDataContainerComponent);

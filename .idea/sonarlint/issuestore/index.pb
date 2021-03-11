@@ -89,3 +89,7 @@ W
 -src/components/common/Preloader/Preloader.jsx,0\e\0e8ee59b1f03e7d6056e3788b69a3fe2f7d263be
 [
 +src/components/Profile/ProfileContainer.jsx,9\2\924a493daba602ac555dab6ecf150a3eac3b212b
+I
+src/redux/auth-reducer.js,0\e\0ea8a07f88acdc37311971af8bbe2f8f89eefbc7
+Y
+)src/components/Header/HeaderContainer.jsx,5\6\560473d288b962b81b29ab15e88aafc7d12c2de2

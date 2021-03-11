@@ -6,3 +6,7 @@ header.header {
 header.header img {
     width: 20px;
 }
+
+.loginBlock {
+    text-align: right;
+}
