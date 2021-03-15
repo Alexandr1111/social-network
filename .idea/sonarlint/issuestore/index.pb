@@ -93,3 +93,5 @@ I
 src/redux/auth-reducer.js,0\e\0ea8a07f88acdc37311971af8bbe2f8f89eefbc7
 Y
 )src/components/Header/HeaderContainer.jsx,5\6\560473d288b962b81b29ab15e88aafc7d12c2de2
+>
+src/api/api.js,c\4\c4b5cc6e5316f0a41e5380b9c170bcfd1835974b

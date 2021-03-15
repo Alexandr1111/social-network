@@ -6,7 +6,8 @@ import {
     setCurrentPage,
     setUsers,
     setTotalUsersCount,
-    toggleIsFetching
+    toggleIsFetching,
+    toggleFollowingInProgress
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
@@ -35,7 +36,7 @@ class UsersContainer extends Component {
     }
 
     render() {
-        const { users, follow, unfollow, totalUsersCount, pageSize, currentPage, isFetching } = this.props;
+        const { users, follow, unfollow, totalUsersCount, pageSize, currentPage, isFetching, followingInProgress, toggleFollowingInProgress } = this.props;
 
         return (
             <>
@@ -50,6 +51,8 @@ class UsersContainer extends Component {
                     follow={follow}
                     unfollow={unfollow}
                     isFetching={isFetching}
+                    followingInProgress={followingInProgress}
+                    toggleFollowingInProgress={toggleFollowingInProgress}
                 />
             </>
         )
@@ -62,7 +65,8 @@ const mapStateToProps = state => {  // Здесь сидит весь стейт
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -90,4 +94,5 @@ const mapStateToProps = state => {  // Здесь сидит весь стейт
 // }
 
 // follow: follow
-export default connect(mapStateToProps, { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching })(UsersContainer);
+// в пропсы придёт не сам action creator, connect создаст колбэк, который внутри задиспатчит return action creator
+export default connect(mapStateToProps, { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingInProgress })(UsersContainer);
