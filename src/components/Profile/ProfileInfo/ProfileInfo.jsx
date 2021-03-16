@@ -1,5 +1,6 @@
 import React from "react";
 import c from "./ProfileInfo.module.css";
+import user from "../../../assets/images/user.png";
 
 const ProfileInfo = ({profile}) => {
     return (
@@ -8,7 +9,7 @@ const ProfileInfo = ({profile}) => {
                 <img src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt="" />
             </div>
             <div className={c.descriptionBlock}>
-                <img src={profile.photos.large} alt="" />
+                <img src={profile.photos.large ? profile.photos.large : user} alt="" />
                 <div>
                     {profile.fullName}
                 </div>

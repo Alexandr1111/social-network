@@ -2,9 +2,8 @@ import c from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
-const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, users, follow, unfollow, followingInProgress, toggleFollowingInProgress }) => {
+const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, users, follow, unfollow, followingInProgress}) => {
 
     const pagesCount = Math.ceil(totalUsersCount / pageSize);   // При totalUsersCount 19 и pageSize 5 не теряются последние пользователи
     let pages = [];
@@ -28,28 +27,12 @@ const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, users, fo
                             </div>
                             <div>
                                 {u.followed
-                                    ? <button disabled={followingInProgress.some(id => id == u.id)} onClick={()=> {
-                                        toggleFollowingInProgress(true, u.id);
-                                        usersAPI.unfollow(u.id)
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
-                                                    unfollow(u.id);
-                                                }
-                                                toggleFollowingInProgress(false, u.id);
-                                            })
-
-                                    }}>Unfollow</button>
-                                    : <button disabled={followingInProgress.some(id => id == u.id)} onClick={()=> {
-                                        toggleFollowingInProgress(true, u.id);
-                                        usersAPI.follow(u.id)
-                                            .then(response => {
-                                                if (response.data.resultCode === 0) {
-                                                    follow(u.id);
-                                                }
-                                                toggleFollowingInProgress(false, u.id);
-                                            })
-
-                                    }}>Follow</button>
+                                    ? <button disabled={followingInProgress.some(id => id == u.id)} onClick={() => unfollow(u.id)}>
+                                        Unfollow
+                                      </button>
+                                    : <button disabled={followingInProgress.some(id => id == u.id)} onClick={() => follow(u.id)}>
+                                        Follow
+                                      </button>
                                 }
                             </div>
                         </span>

@@ -2,8 +2,9 @@ import React, { createRef } from "react";
 import c from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import { Redirect } from "react-router-dom";
 
-const Dialogs = ({dialogsPage, updateNewMessageBody, sendMessage}) => {
+const Dialogs = ({dialogsPage, updateNewMessageBody, sendMessage, isAuth}) => {
 
     const newMessageElement = createRef();
 
@@ -15,7 +16,8 @@ const Dialogs = ({dialogsPage, updateNewMessageBody, sendMessage}) => {
         updateNewMessageBody(newMessageElement.current.value);
     }
 
-    return (
+    return isAuth ? (
+
         <div className={c.dialogs}>
             <div className={c.dialogsItems}>
                 {dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id} />)}
@@ -30,7 +32,8 @@ const Dialogs = ({dialogsPage, updateNewMessageBody, sendMessage}) => {
                 <button onClick={onSendMessageClick}>Add message</button>
             </div>
         </div>
-    )
+
+    ) : <Redirect to={'/login'} />
 }
 
 export default Dialogs;
