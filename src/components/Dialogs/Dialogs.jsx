@@ -16,8 +16,7 @@ const Dialogs = ({dialogsPage, updateNewMessageBody, sendMessage, isAuth}) => {
         updateNewMessageBody(newMessageElement.current.value);
     }
 
-    return isAuth ? (
-
+    return (
         <div className={c.dialogs}>
             <div className={c.dialogsItems}>
                 {dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id} />)}
@@ -32,8 +31,7 @@ const Dialogs = ({dialogsPage, updateNewMessageBody, sendMessage, isAuth}) => {
                 <button onClick={onSendMessageClick}>Add message</button>
             </div>
         </div>
-
-    ) : <Redirect to={'/login'} />
+    )
 }
 
 export default Dialogs;
