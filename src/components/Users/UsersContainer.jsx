@@ -8,6 +8,8 @@ import {
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import { compose } from "redux";
+import { WithAuthRedirect } from "../../hoc/WithAuthRedirect";
 
 class UsersContainer extends Component {
 
@@ -87,9 +89,19 @@ const mapStateToProps = state => {  // Здесь сидит весь стейт
 
 // follow: follow
 // в пропсы придёт не сам action creator, connect создаст колбэк, который внутри задиспатчит return action creator
-export default connect(mapStateToProps, {
+// export default connect(mapStateToProps, {
+//     setCurrentPage,
+//     getUsers,
+//     follow,
+//     unfollow
+// })(UsersContainer);
+
+export default compose(
+    WithAuthRedirect,
+    connect(mapStateToProps, {
     setCurrentPage,
     getUsers,
     follow,
     unfollow
-})(UsersContainer);
+})
+)(UsersContainer);
