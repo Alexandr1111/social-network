@@ -95,3 +95,11 @@ Y
 )src/components/Header/HeaderContainer.jsx,5\6\560473d288b962b81b29ab15e88aafc7d12c2de2
 >
 src/api/api.js,c\4\c4b5cc6e5316f0a41e5380b9c170bcfd1835974b
+N
+src/components/Login/Login.jsx,b\5\b544c10d894a20b6ac9af7f4836e1baad1b260a4
+L
+src/hoc/WithAuthRedirect.jsx,c\7\c78b0e0f08351eced5751805d210eb41a0593be0
+d
+4src/components/Profile/ProfileInfo/ProfileStatus.jsx,6\b\6b73d0e2b043f68afe36a754d33df318ab599b75
+9
+	yarn.lock,5\3\53585a096fe3a3b96321113856ae62602995a33b
