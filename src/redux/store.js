@@ -47,7 +47,7 @@ let store = {
 // export const updateNewPostText = newText => {   // сидит текущее значение инпута
 //     state.profilePage.newPostText = newText;
 //     // вызываем subscriber,если subscriber не был переопределён вызовется console.log('no subscribers'), но если кто-то
-//     // подписался и отдал своего обсервера(rerenderEntireTree из index.js) и получается мы вызываем rerenderEntireTree из index.js как-будто
+//     // подписался и отдал своего обсервера(rerenderEntireTree из validators.js) и получается мы вызываем rerenderEntireTree из validators.js как-будто
 //     rerenderEntireTree(state);
 // }
 //
