@@ -3,7 +3,7 @@ import c from "./ProfileInfo.module.css";
 import user from "../../../assets/images/user.png";
 import ProfileStatus from "./ProfileStatus";
 
-const ProfileInfo = ({profile}) => {
+const ProfileInfo = ({profile, status, updateStatus}) => {
     return (
         <div>
             <div>
@@ -14,7 +14,7 @@ const ProfileInfo = ({profile}) => {
                 <div>
                     {profile.fullName}
                 </div>
-                <ProfileStatus status={'test'} />
+                <ProfileStatus status={status} updateStatus={updateStatus} />
             </div>
         </div>
     )
