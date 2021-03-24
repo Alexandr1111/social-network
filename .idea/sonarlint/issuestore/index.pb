@@ -103,3 +103,11 @@ d
 4src/components/Profile/ProfileInfo/ProfileStatus.jsx,6\b\6b73d0e2b043f68afe36a754d33df318ab599b75
 9
 	yarn.lock,5\3\53585a096fe3a3b96321113856ae62602995a33b
+l
+<src/components/common/FormsControls/FormsControls.module.css,9\c\9c5e9ecb832e72d04229a1593b9be2044e081f06
+h
+8src/components/Dialogs/AddMessageForm/AddMessageForm.jsx,f\d\fd53fd25bc29971c0a6e427457feebb83b8b4873
+R
+"src/utils/validators/validators.js,6\c\6ceb6cc0d98c1f56a8990f0bcb0f91596437a7f5
+e
+5src/components/common/FormsControls/FormsControls.jsx,f\3\f34b0656100342530473694229a0c59d9d10ed2c
