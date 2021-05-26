@@ -1,4 +1,5 @@
-import {authAPI} from "../api/api";
+import { authAPI } from "../api/api";
+import { stopSubmit } from "redux-form";    // это actionCreator
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -42,6 +43,10 @@ export const login = ( email, password, rememberMe ) => {
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(getAuthUserData());
+                }
+                else {
+                    const message = response.data.messages.length ? response.data.messages[0] : 'Some error';
+                    dispatch(stopSubmit('login', { _error: message }));  // 1)название формы, 2)проблемные поля и текст ошибки(можно по имени Field)
                 }
             })
     }
