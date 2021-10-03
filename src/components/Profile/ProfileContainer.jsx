@@ -9,7 +9,7 @@ class ProfileContainer extends Component {
 
     componentDidMount() {
         let userId = this.props.match.params.userId;
-        if(!userId) {
+        if (!userId) {
             userId = this.props.authorizedUserId;
         }
         this.props.getUserProfile(userId);

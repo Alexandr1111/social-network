@@ -97,7 +97,7 @@ const mapStateToProps = state => {  // Здесь сидит весь стейт
 // })(UsersContainer);
 
 export default compose(
-    WithAuthRedirect,
+    // WithAuthRedirect, теперь можно зайти на пользователей не авторизованному
     connect(mapStateToProps, {
     setCurrentPage,
     getUsers,
