@@ -1,4 +1,3 @@
-import "./App.css";
 import React from "react";
 import Navbar from "./components/Navbar/Navbar";
 import {Route, withRouter} from "react-router-dom";
@@ -13,6 +12,7 @@ import {initializeApp} from "./redux/app-reducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import Preloader from "./components/common/Preloader/Preloader";
+import "./App.css";
 
 class App extends React.Component {
     componentDidMount() {
