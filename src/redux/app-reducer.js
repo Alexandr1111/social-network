@@ -1,6 +1,6 @@
 import {getAuthUserData} from "./auth-reducer";    // это actionCreator
 
-const SET_INITIALIZED_SUCCESS = 'SET-INITIALIZED-SUCCESS';
+const SET_INITIALIZED_SUCCESS = 'app/SET-INITIALIZED-SUCCESS';
 
 const initialState = {
     initialized: false
