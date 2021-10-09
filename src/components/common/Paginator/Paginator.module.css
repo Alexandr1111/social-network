@@ -1,7 +1,14 @@
-.page {
-    cursor: pointer;
+.paginator {
+    margin: 10px;
 }
 
-.selectedPage {
+.page {
+    cursor: pointer;
+    padding: 3px;
+    border: 1px solid gray;
+}
+
+.page.selectedPage {
     font-weight: bold;
+    border: 1px solid black;
 }

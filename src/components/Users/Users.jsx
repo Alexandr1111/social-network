@@ -8,7 +8,7 @@ const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, users, fo
             <Paginator
                 currentPage={currentPage}
                 onPageChanged={onPageChanged}
-                totalUsersCount={totalUsersCount}
+                totalItemsCount={totalUsersCount}
                 pageSize={pageSize}
             />
             {users.map(u => <User user={u} key={u.id} followingInProgress={followingInProgress} follow={follow}
