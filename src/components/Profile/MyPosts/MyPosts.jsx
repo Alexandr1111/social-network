@@ -35,7 +35,7 @@ const MyPosts = ({posts, addPost}) => {
                 <AddNewPostForm onSubmit={onAddPost} />
             </div>
             <div className={c.posts}>
-                {posts.map(p => <Post message={p.message} likeCount={p.likeCount} />)}
+                {posts.map(p => <Post key={p.id} message={p.message} likeCount={p.likeCount} />)}
             </div>
         </div>
     )

@@ -38,7 +38,7 @@ export const login = ( email, password, rememberMe ) => async (dispatch) => {
         }
     else {
         const message = response.data.messages.length ? response.data.messages[0] : 'Some error';
-        dispatch(stopSubmit('login', { _error: message }));  // 1)название формы, 2)проблемные поля и текст ошибки(можно по имени Field)
+        dispatch(stopSubmit('login', { _error: message }));  // 1)название формы 2)проблемные поля и текст ошибки(_error - общая. Можно по имени Field)
     }
 }
 

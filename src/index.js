@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import store from './redux/redux-store';
 import App from "./App";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 
 ReactDOM.render(
@@ -10,7 +10,8 @@ ReactDOM.render(
     // не будет работать на localhost
     // hashRouter - работает на якорях как раньше, решает проблему с 404 при обновлении страницы после
     // https://alexandr1111.github.io/social-network/profile(или другие адреса) если не писать basename
-    <Router basename={process.env.PUBLIC_URL}>
+    //basename={process.env.PUBLIC_URL}
+    <Router>
         <Provider store={store}>
             <App />
         </Provider>

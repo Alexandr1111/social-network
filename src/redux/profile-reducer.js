@@ -1,4 +1,5 @@
 import { profileAPI } from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = 'profile/ADD_POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
@@ -72,6 +73,28 @@ export const savePhoto = file => async (dispatch) => {
     const response = await profileAPI.savePhoto(file);
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos));
+    }
+}
+
+export const saveProfile = profile => async (dispatch, getState) => {
+    const userId =  getState().auth.userId;
+    const response = await profileAPI.saveProfile(profile);
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfile(userId));
+    }
+    else {
+        const messages = response.data.messages;
+        for (const message of messages) {
+            const socialNetworkName = message
+                .slice(0,-1)    // убрали скобку
+                .toLowerCase()
+                .split("(")[1]  // убрали "invalid url format"
+                .split("->")[1]    // разделили на [contacts, [network]] и взяли [network]
+            dispatch(stopSubmit('edit-profile', {
+                "contacts": { [socialNetworkName]: message.toLowerCase().includes(socialNetworkName) && message }
+            }));
+        }
+        return Promise.reject("reject");
     }
 }
 

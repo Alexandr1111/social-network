@@ -21,7 +21,7 @@ export const Textarea = (props) => {
 
     return (
         <FormControl {...props}>
-            <textarea {...input} {...restProps} />
+            <textarea {...input} {...props} {...restProps} />
         </FormControl>
     )
 }
@@ -32,7 +32,7 @@ export const Input = (props) => {
 
     return (
         <FormControl {...props}>
-            <input {...input} {...restProps} />
+            <input {...input} {...props} {...restProps} />
         </FormControl>
     )
 }
