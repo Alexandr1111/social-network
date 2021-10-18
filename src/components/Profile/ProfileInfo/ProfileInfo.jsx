@@ -44,9 +44,6 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, savePro
 const ProfileData = ({profile, isOwner, activateEditMode}) => {
     return (
         <>
-            {isOwner &&<div>
-                <button onClick={activateEditMode}>edit</button>
-            </div>}
             <div>
                 <b>FullName</b>: {profile.fullName && profile.fullName}
             </div>
@@ -65,6 +62,9 @@ const ProfileData = ({profile, isOwner, activateEditMode}) => {
                 return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
             })}
             </div>
+            {isOwner &&<div>
+                <button className={c.btn} onClick={activateEditMode}>Редактировать</button>
+            </div>}
         </>
     )
 }
@@ -73,7 +73,7 @@ const ProfileData = ({profile, isOwner, activateEditMode}) => {
 const Contact = ({contactTitle, contactValue}) => {
     return (
         <div className={c.contact}>
-            <b>{contactTitle}</b>: <b>{contactValue}</b>
+            <b>{contactTitle}</b>: <a className={c.contactValue} href={contactValue} target='_blank'><b>{contactValue}</b></a>
         </div>
     )
 }

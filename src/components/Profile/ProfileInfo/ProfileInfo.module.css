@@ -13,3 +13,31 @@
 .contact {
     padding-left: 10px;
 }
+
+.contactValue {
+    text-decoration: none;
+    color: #023463;
+}
+
+.contactValue:hover {
+    text-decoration: underline;
+    color: #20527b;
+}
+
+.btn {
+    box-shadow: 0 5px 5px -3px #34495e;
+    background-color: #3498db;
+    border-radius: 10px;
+    height: 40px;
+    margin-top: 10px;
+    color: black;
+    text-align: center;
+    text-transform: uppercase;
+    min-width: 129px;
+}
+
+.btn:hover{
+    box-shadow: inset 0 -30px 30px -10px #34495e;
+    cursor: pointer;
+    border-radius: 10px;
+}

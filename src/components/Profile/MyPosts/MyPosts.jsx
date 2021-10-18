@@ -14,7 +14,7 @@ let AddNewPostForm = (props) => {
                 <Field name='newPostText' component={Textarea} validate={[required, maxLength10]} />
             </div>
             <div>
-                <button type='submit'>Add post</button>
+                <button className={c.btn} type='submit'>Add post</button>
             </div>
         </form>
     )
