@@ -2,11 +2,15 @@ import {getAuthUserData} from "./auth-reducer";    // это actionCreator
 
 const SET_INITIALIZED_SUCCESS = 'app/SET-INITIALIZED-SUCCESS';
 
-const initialState = {
+export type InitialStateType = {
+    initialized: boolean
+}
+
+const initialState: InitialStateType = {
     initialized: false
 }
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case SET_INITIALIZED_SUCCESS:
             return {
@@ -18,9 +22,17 @@ const appReducer = (state = initialState, action) => {
     }
 }
 
-export const initializedSuccess = () => ({type: SET_INITIALIZED_SUCCESS});
+// let a: 'yoyo'
+// a = 'yoyo'
+//a = 'yoyo2' // ошибка
 
-export const initializeApp = () => (dispatch) => {
+export type InitializedSuccessActionType = {
+    type: typeof SET_INITIALIZED_SUCCESS    // тип равный значению константы
+}
+
+export const initializedSuccess = (): InitializedSuccessActionType => ({type: SET_INITIALIZED_SUCCESS});
+
+export const initializeApp = () => (dispatch: any) => {
         const promise1 = dispatch(getAuthUserData());
         //dispatch(something)
         Promise.all([promise1])
