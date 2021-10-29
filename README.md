@@ -1,1 +1,1 @@
-Deploy github pages: https://alexandr1111.github.io/social-network/
+Deployed on github pages: https://alexandr1111.github.io/social-network/
