@@ -5,7 +5,6 @@ const Preloader = (props) => {
     return (
         <div>
             <img src={preloader} alt="preloader" />
-
         </div>
     )
 }

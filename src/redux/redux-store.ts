@@ -7,7 +7,7 @@ import thunkMiddleware from "redux-thunk";  // своё название люб�
 import { reducer as formReducer } from "redux-form";
 import authReducer from "./auth-reducer";
 
-let reducers = combineReducers({
+const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
@@ -16,8 +16,15 @@ let reducers = combineReducers({
     form: formReducer   // Обязательно должно быть именно form
 })
 
+type RootReducerType = typeof rootReducer;
+export type AppStateType = ReturnType<RootReducerType>;
+
+// let state: AppStateType;
+// state.dialogsPage   Можем теперь достать часть стейта используя ts
+
 // redux devtools installed
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 export default store;

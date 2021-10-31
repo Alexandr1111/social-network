@@ -1,7 +1,15 @@
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 import c from "./Paginator.module.css";
 
-const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
+type Props = {
+    totalItemsCount: number
+    pageSize: number
+    currentPage: number
+    onPageChanged: (pageNumber: number) => void
+    portionSize?: number
+}
+
+const Paginator: FC<Props> = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
     const pagesCount = Math.ceil(totalItemsCount / pageSize);   // При totalUsersCount 19 и pageSize 5 не теряются последние пользователи
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {

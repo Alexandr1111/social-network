@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-    setCurrentPage,
     requestUsers,
     follow,
     unfollow
@@ -17,14 +16,37 @@ import {
     getPageSize,
     getTotalUsersCount
 } from "../../redux/users-selectors";
+import {UserType} from "../../types/types";
+import {AppStateType} from "../../redux/redux-store";
 
-class UsersContainer extends Component {
+type MapStatePropsType = {
+    currentPage: number
+    pageSize: number
+    isFetching: boolean
+    totalUsersCount: number
+    users: Array<UserType>
+    followingInProgress: Array<number>
+}
+
+type MapDispatchPropsType = {
+    getUsers: (pageNumber: number, pageSize: number) => void
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+}
+
+type OwnPropsType = {
+    // пропсы, которые передали через атрибуты передали в теге
+}
+
+type P = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
+
+class UsersContainer extends Component<P> {
 
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
-    onPageChanged = pageNumber => {
+    onPageChanged = ( pageNumber: number ) => {
         this.props.getUsers(pageNumber, this.props.pageSize);
     }
 
@@ -71,7 +93,7 @@ class UsersContainer extends Component {
 //     }
 // }
 
-const mapStateToProps = state => {  // Здесь сидит весь стейт приложения
+const mapStateToProps = ( state: AppStateType ): MapStatePropsType => {  // Здесь сидит весь стейт приложения
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
@@ -116,8 +138,8 @@ const mapStateToProps = state => {  // Здесь сидит весь стейт
 
 export default compose(
     // WithAuthRedirect, теперь можно зайти на пользователей не авторизованному
-    connect(mapStateToProps, {
-    setCurrentPage,
+    // TStateProps, TDispatchProps, TOwnProps, DefaultRootState
+    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
     getUsers: requestUsers,
     follow,
     unfollow
