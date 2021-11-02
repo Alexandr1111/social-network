@@ -1,4 +1,7 @@
-import {getAuthUserData} from "./auth-reducer";    // это actionCreator
+import {getAuthUserData} from "./auth-reducer";
+// import {ThunkType} from "./users-reducer";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";    // это actionCreator
 
 const SET_INITIALIZED_SUCCESS = 'app/SET-INITIALIZED-SUCCESS';
 
@@ -10,7 +13,7 @@ const initialState: InitialStateType = {
     initialized: false
 }
 
-const appReducer = (state = initialState, action: any): InitialStateType => {
+const appReducer = ( state = initialState, action: ActionsType ): InitialStateType => {
     switch (action.type) {
         case SET_INITIALIZED_SUCCESS:
             return {
@@ -22,6 +25,8 @@ const appReducer = (state = initialState, action: any): InitialStateType => {
     }
 }
 
+type ActionsType = InitializedSuccessActionType;
+
 // let a: 'yoyo'
 // a = 'yoyo'
 //a = 'yoyo2' // ошибка
@@ -32,7 +37,9 @@ export type InitializedSuccessActionType = {
 
 export const initializedSuccess = (): InitializedSuccessActionType => ({type: SET_INITIALIZED_SUCCESS});
 
-export const initializeApp = () => (dispatch: any) => {
+export type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsType>;
+
+export const initializeApp = (): ThunkType => (dispatch) => {
         const promise1 = dispatch(getAuthUserData());
         //dispatch(something)
         Promise.all([promise1])

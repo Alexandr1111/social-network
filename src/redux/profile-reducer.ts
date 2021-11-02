@@ -1,6 +1,8 @@
 import { profileAPI } from "../api/api";
 import {stopSubmit} from "redux-form";
 import { PostType, ProfileType, PhotosType } from "../types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const ADD_POST = 'profile/ADD_POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
@@ -19,7 +21,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState;
 
-const profileReducer = ( state = initialState, action: any ): InitialStateType => {
+const profileReducer = ( state = initialState, action: ActionsType ): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             const newPost = { id: 5, message: action.newPostText, likeCount: 0 };
@@ -52,6 +54,12 @@ const profileReducer = ( state = initialState, action: any ): InitialStateType =
             return state;
     }
 }
+
+type ActionsType = AddPostActionCreatorActionType
+    | SetUserProfileActionType
+    | SetStatusActionType
+    | DeletePostActionType
+    | SavePhotoSuccessActionType;
 
 export type AddPostActionCreatorActionType = {
     type: typeof ADD_POST
@@ -88,35 +96,37 @@ export type SavePhotoSuccessActionType = {
 
 export const savePhotoSuccess = ( photos: PhotosType ): SavePhotoSuccessActionType => ({ type: SAVE_PHOTO_SUCCESS, photos });
 
-export const getUserProfile = ( userId: number ) => async (dispatch: any) => {
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>;
+
+export const getUserProfile = ( userId: number | null ): ThunkType => async (dispatch) => {
     const response = await profileAPI.getProfile(userId);
     dispatch(setUserProfile(response.data));
 }
 
-export const getStatus = ( userId: number ) => async (dispatch: any) => {
+export const getStatus = ( userId: number ): ThunkType => async (dispatch) => {
     const response = await profileAPI.getStatus(userId);
     dispatch(setStatus(response.data));
 }
 
-export const updateStatus = ( status: string ) => async (dispatch: any) => {
+export const updateStatus = ( status: string ): ThunkType => async (dispatch) => {
     const response = await profileAPI.updateStatus(status);
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status));
     }
 }
 
-export const savePhoto = ( file: any ) => async (dispatch: any) => {
+export const savePhoto = ( file: any ): ThunkType => async (dispatch) => {
     const response = await profileAPI.savePhoto(file);
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos));
     }
 }
 
-export const saveProfile = ( profile:ProfileType ) => async (dispatch: any, getState: any) => {
+export const saveProfile = ( profile: ProfileType ): ThunkType => async (dispatch, getState) => {
     const userId =  getState().auth.userId;
     const response = await profileAPI.saveProfile(profile);
     if (response.data.resultCode === 0) {
-        dispatch(getUserProfile(userId));
+        await dispatch(getUserProfile(userId));
     }
     else {
         const messages = response.data.messages;
@@ -126,6 +136,7 @@ export const saveProfile = ( profile:ProfileType ) => async (dispatch: any, getS
                 .toLowerCase()
                 .split("(")[1]  // убрали "invalid url format"
                 .split("->")[1]    // разделили на [contacts, [network]] и взяли [network]
+            // @ts-ignore
             dispatch(stopSubmit('edit-profile', {
                 "contacts": { [socialNetworkName]: message.toLowerCase().includes(socialNetworkName) && message }
             }));
