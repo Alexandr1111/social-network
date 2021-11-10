@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../../logo.svg";
+import logo from "../../logo.jpg";
 import s from "./Header.module.css";
 
 type P = {
@@ -15,11 +15,11 @@ const Header: FC<P> = ({isAuth, login, logout}) => {
             <img src={logo} alt="logo" />
             <div className={s.loginBlock}>
                 {isAuth
-                    ? <div>
+                    ? <div style={{display: 'flex', alignItems: 'center'}}>
                         {login}
-                        <input type="button" onClick={logout} value="Log out" />
+                        <input type="button" className={s.btn} onClick={logout} value="Log out" />
                       </div>
-                    : <NavLink to={'/login'}>
+                    : <NavLink to={'/login'} className={s.btn}>
                         Login
                       </NavLink>
                 }

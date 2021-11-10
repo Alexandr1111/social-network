@@ -1,12 +1,41 @@
 header.header {
     grid-area: header;
     background: green;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header.header img {
-    width: 20px;
+    height: 100%;
+    width: 200px;
 }
 
 .loginBlock {
+    padding-right: 10px;
     text-align: right;
+}
+
+.loginBlock > * {
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.btn {
+    box-shadow: 0 5px 5px -3px #34495e;
+    background-color: #3498db;
+    border-radius: 10px;
+    height: 40px;
+    color: black;
+    margin-left: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    min-width: 129px;
+    padding: 10px;
+}
+
+.btn:hover {
+    box-shadow: inset 0 -30px 30px -10px #34495e;
+    cursor: pointer;
+    border-radius: 10px;
 }

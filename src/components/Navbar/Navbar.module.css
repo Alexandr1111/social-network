@@ -1,11 +1,22 @@
 nav.nav {
     grid-area: nav;
     background: burlywood;
+    width: 200px;
+    box-sizing: border-box;
+    padding: 12px;
 }
 
 .item a {
     color: white;
     text-decoration: none;
+}
+
+.item a:hover {
+    color: gold;
+}
+
+.item + .item {
+    margin-top: 6px;
 }
 
 .item a.active {
