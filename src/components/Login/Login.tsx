@@ -1,13 +1,14 @@
-import React from "react";
-import { Field, reduxForm } from "redux-form";
+import React, {FC} from "react";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import { Input } from "../common/FormsControls/FormsControls";
 import { required } from "../../utils/validators/validators";
 import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import { Redirect } from "react-router-dom";
 import s from "../common/FormsControls/FormsControls.module.css";
+import {AppStateType} from "../../redux/redux-store";
 
-const LoginForm = ({handleSubmit, error, captchaUrl, onInputCaptcha}) => {
+const LoginForm: FC<InjectedFormProps<LoginFormValuesType & LoginFormOwnPropsType> & LoginFormOwnPropsType> = ({handleSubmit, error, captchaUrl}) => {
     return (
         <form onSubmit={handleSubmit}>    {/* redux-form событие с e.preventDefault() чтобы страница не перезагружалась */}
             <div>
@@ -21,7 +22,7 @@ const LoginForm = ({handleSubmit, error, captchaUrl, onInputCaptcha}) => {
             </div>
             {captchaUrl &&
             <>
-                <img src={captchaUrl} alt=""/>
+                <img src={captchaUrl} alt="" />
                 <Field name='captcha' placeholder='input captcha...' component={Input} validate={[required]} />
             </>}
             {error &&
@@ -35,11 +36,34 @@ const LoginForm = ({handleSubmit, error, captchaUrl, onInputCaptcha}) => {
     )
 }
 
-const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);
+const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnPropsType>({form: 'login'})(LoginForm);
 
-const Login = ({login, isAuth, captchaUrl, onInputCaptcha}) => {
+type LoginFormOwnPropsType = {
+    captchaUrl?: string | null
+}
 
-    const onSubmit = formData => {
+type MapStatePropsType = {
+    isAuth: boolean
+    captchaUrl: string | null
+}
+
+type MapDispatchPropsType = {
+    login: (email: string, password: string, rememberMe: boolean, captcha: string) => void
+}
+
+type CommonType = LoginFormOwnPropsType & MapStatePropsType & MapDispatchPropsType;
+
+// Данные, собираемые формой
+type LoginFormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string
+}
+
+const Login: FC<CommonType> = ({login, isAuth, captchaUrl}) => {
+
+    const onSubmit = ( formData: LoginFormValuesType ) => {
         login(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
 
@@ -50,12 +74,12 @@ const Login = ({login, isAuth, captchaUrl, onInputCaptcha}) => {
     return (
         <div>
             <h1>Логин</h1>
-            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl} onInputCaptcha={onInputCaptcha} />
+            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl} />
         </div>
     )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ( state: AppStateType ): MapStatePropsType => {
     return {
         isAuth: state.auth.isAuth,
         captchaUrl: state.auth.captchaUrl
