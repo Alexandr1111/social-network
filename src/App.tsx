@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from "react";
+import React, {Component} from "react";
 import Navbar from "./components/Navbar/Navbar";
 import {Route, withRouter} from "react-router-dom";
 import Music from "./components/Music/Music";
@@ -12,14 +12,25 @@ import {compose} from "redux";
 import Preloader from "./components/common/Preloader/Preloader";
 
 import "./App.css";
+import {AppStateType} from "./redux/redux-store";
 
+const Suspense = (React as any).Suspense;
+const lazy = (React as any).lazy;
 // в bundle не попадёт, а загрузится по мере необходимости
-const ProfileContainer = lazy( () => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = lazy( () => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = lazy( () => import('./components/Profile/ProfileContainer'));
 
+type MapStatePropsType = ReturnType<typeof mapStateToProps>;
 
+type MapDispatchPropsType = {
+    initializeApp: () => void
+}
 
-class App extends React.Component {
+type OwnPropsType = {
+
+}
+
+class App extends Component<MapStatePropsType & MapDispatchPropsType> {
     componentDidMount() {
         this.props.initializeApp();
     }
@@ -49,7 +60,7 @@ class App extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ( state: AppStateType ) => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login,
@@ -59,5 +70,5 @@ const mapStateToProps = state => {
 
 export default compose(
     withRouter,
-    connect(mapStateToProps, { initializeApp })
+    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, { initializeApp })
 )(App);

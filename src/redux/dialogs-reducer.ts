@@ -1,16 +1,7 @@
 import {InferActionsTypes} from "./redux-store";
+import {DialogType, MessageType} from "../types/types";
 
 const SEND_MESSAGE = 'SN/DIALOGS/SEND-MESSAGE';
-
-type DialogType = {
-    id: number
-    name: string
-}
-
-type MessageType = {
-    id: number
-    message: string
-}
 
 const initialState = {
     messages: [{id: 1, message: "Hi how are you?"}, {id: 2, message: "What did you do yesterday?"}, {id: 3, message: "Yes, sure"}] as Array<MessageType>,
@@ -36,7 +27,7 @@ const dialogsReducer = ( state = initialState, action: ActionsType ): InitialSta
 type ActionsType = InferActionsTypes<typeof actions>;
 
 export const actions = {
-    sendMessageCreator: ( newMessageBody: string ) => ({ type: SEND_MESSAGE, newMessageBody } as const)
+    sendMessage: (newMessageBody: string ) => ({ type: SEND_MESSAGE, newMessageBody } as const)
 }
 
 export default dialogsReducer;

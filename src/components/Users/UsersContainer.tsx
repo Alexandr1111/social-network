@@ -35,7 +35,7 @@ type MapDispatchPropsType = {
 }
 
 type OwnPropsType = {
-    // пропсы, которые передали через атрибуты передали в теге
+    // пропсы, которые передали через атрибуты в теге
 }
 
 type P = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
