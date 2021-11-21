@@ -1,18 +1,11 @@
-import {authAPI, ResultCodesEnum, securityAPI} from "../api/api";
+import {ResultCodesEnum} from "../api/api";
 import {stopSubmit} from "redux-form";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store"; // это actionCreator
+import {InferActionsTypes, BaseThunkType} from "./redux-store";
+import {authAPI} from "../api/auth-api";
+import {securityAPI} from "../api/security-api";
 
-const SET_USER_DATA = 'auth/SET_USER_DATA';
-const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
-
-// export type InitialStateType2 = {
-//     userId: number | null
-//     email: string | null
-//     login: string | null
-//     isAuth: boolean
-//     captchaUrl: string | null
-// }
+const SET_USER_DATA = 'SN/AUTH/SET_USER_DATA';
+const GET_CAPTCHA_URL_SUCCESS = 'SN/AUTH/GET_CAPTCHA_URL_SUCCESS';
 
 const initialState = {
     userId: null as number | null,
@@ -23,6 +16,7 @@ const initialState = {
 }
 
 type InitialStateType = typeof initialState;
+type ThunkType = BaseThunkType<ActionsType>;
 
 const authReducer = ( state = initialState, action: ActionsType ): InitialStateType => {
     switch (action.type) {
@@ -41,66 +35,48 @@ const authReducer = ( state = initialState, action: ActionsType ): InitialStateT
     }
 }
 
-type ActionsType = SetAuthUserDataActionType | GetCaptchaUrlSuccessActionType;
+type ActionsType = InferActionsTypes<typeof actions>;
 
-type SetAuthUserDataActionPayloadType = {
-    userId: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean
+export const actions = {
+    setAuthUserData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean ) =>
+        ({ type: SET_USER_DATA, payload: { userId, email, login, isAuth }} as const),
+    getCaptchaUrlSuccess: (captchaUrl: string) => ({ type: GET_CAPTCHA_URL_SUCCESS, captchaUrl } as const)
 }
-
-type SetAuthUserDataActionType = {
-    type: typeof SET_USER_DATA
-    payload: SetAuthUserDataActionPayloadType
-}
-
-export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean ): SetAuthUserDataActionType => ({type: SET_USER_DATA, payload: { userId, email, login, isAuth }});
-
-type GetCaptchaUrlSuccessActionType = {
-    type: typeof GET_CAPTCHA_URL_SUCCESS
-    captchaUrl: string
-}
-
-export const getCaptchaUrlSuccess = (captchaUrl: string): GetCaptchaUrlSuccessActionType => ({type: GET_CAPTCHA_URL_SUCCESS, captchaUrl});
-
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>;
 
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
-    const response = await authAPI.me();
-    if (response.resultCode === ResultCodesEnum.Success) {
-        const { id, email, login } = response.data;
-        dispatch(setAuthUserData(id, email, login, true));
+    const data = await authAPI.me();
+    if (data.resultCode === ResultCodesEnum.Success) {
+        const { id, email, login } = data.data;
+        dispatch(actions.setAuthUserData(id, email, login, true));
     }
 }
 
 export const login = ( email: string, password: string, rememberMe: boolean, captcha: any ): ThunkType => async (dispatch) => {
-    const response = await authAPI.login(email, password, rememberMe, captcha);
-    if (response.data.resultCode === ResultCodesEnum.Success) {
+    const data = await authAPI.login(email, password, rememberMe, captcha);
+    if (data.resultCode === ResultCodesEnum.Success) {
         await dispatch(getAuthUserData());
     }
     else {
-        if (response.data.resultCode === ResultCodesEnum.CaptchaIsRequired) {   // captcha
+        if (data.resultCode === ResultCodesEnum.CaptchaIsRequired) {   // captcha
             await dispatch(getCaptchaUrl());
         }
-        const message = response.data.messages.length ? response.data.messages[0] : 'Some error';
+        const message = data.messages.length ? data.messages[0] : 'Some error';
         // @ts-ignore
         dispatch(stopSubmit('login', { _error: message }));  // 1)название формы 2)проблемные поля и текст ошибки(_error - общая. Можно по имени Field)
     }
 }
 
 export const logout = (): ThunkType => async (dispatch) => {
-    const response = await authAPI.logout();
-    if (response.data.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false));
+    const data = await authAPI.logout();
+    if (data.resultCode === ResultCodesEnum.Success) {
+        dispatch(actions.setAuthUserData(null, null, null, false));
     }
 }
 
 export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
-    const response = await securityAPI.getCaptchaUrl();
-    const captchaUrl = response.data.url;
-    dispatch(getCaptchaUrlSuccess(captchaUrl));
+    const data = await securityAPI.getCaptchaUrl();
+    const captchaUrl = data.url;
+    dispatch(actions.getCaptchaUrlSuccess(captchaUrl));
 }
-
 
 export default authReducer;
