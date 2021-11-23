@@ -1,7 +1,7 @@
-import React from "react";
+import React, {FC} from "react";
 // import c from "./News.module.css";
 
-const News = () => {
+const News: FC = () => {
     return (
         <div>news</div>
     )

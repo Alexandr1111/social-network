@@ -1,9 +1,13 @@
 import c from "./Users.module.css";
 import userPhoto from "../../assets/images/user.png";
-import React from "react";
+import React, {FC} from "react";
 import {NavLink} from "react-router-dom";
+import {UsersProps} from "./Users";
+import {UserType} from "../../types/types";
 
-const User = ({user, followingInProgress, follow, unfollow}) => {
+type UserTypeLocal = Pick<UsersProps, 'follow' | 'unfollow' | 'followingInProgress'> & { user: UserType };
+
+const User: FC<UserTypeLocal> = ({user, followingInProgress, follow, unfollow}) => {
     return (
         <div>
             <span>

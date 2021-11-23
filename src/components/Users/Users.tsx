@@ -3,7 +3,7 @@ import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {UserType} from "../../types/types";
 
-type Props = {
+export type UsersProps = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
@@ -16,7 +16,7 @@ type Props = {
     followingInProgress: Array<number>
 }
 
-const Users: FC<Props> = ({totalUsersCount, pageSize, currentPage, onPageChanged, users, follow, unfollow, followingInProgress}) => {
+const Users: FC<UsersProps> = ({totalUsersCount, pageSize, currentPage, onPageChanged, users, follow, unfollow, followingInProgress}) => {
     return (
         <div>
             <Paginator

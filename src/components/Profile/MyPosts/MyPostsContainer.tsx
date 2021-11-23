@@ -1,6 +1,8 @@
 import MyPosts from "./MyPosts";
 import { actions } from "../../../redux/profile-reducer";
 import { connect } from "react-redux";
+import {AppStateType} from "../../../redux/redux-store";
+import {getNewPostText, getPosts} from "../../../redux/selectors/my-posts-selectors";
 
 // const MyPostsContainer = () => {
 //
@@ -27,21 +29,24 @@ import { connect } from "react-redux";
 //     )
 // }
 
-const mapStateToProps = state => {
+type MapStateType = ReturnType<typeof mapStateToProps>;
+
+type MapDispatchPropsType = {
+    addPost: (body: string) => void
+}
+
+type OwnPropsType = {
+
+}
+
+const mapStateToProps = ( state: AppStateType ) => {
     return {
-        posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText
+        posts: getPosts(state),
+        newPostText: getNewPostText(state)
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addPost: body => {
-            dispatch(actions.addPostActionCreator(body));
-        }
-    }
-}
-
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+const MyPostsContainer = connect<MapStateType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps,
+    { addPost: actions.addPostActionCreator })(MyPosts);
 
 export default MyPostsContainer;

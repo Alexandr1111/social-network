@@ -1,7 +1,8 @@
 import c from "../Dialogs.module.css";
-import React from "react";
+import React, {FC} from "react";
+import {MessageType} from "../../../types/types";
 
-const Message = ({message}) => {
+const Message: FC<Omit<MessageType, 'id'>> = ({message}) => {
     return (
         <div className={c.message}>
             {message}
