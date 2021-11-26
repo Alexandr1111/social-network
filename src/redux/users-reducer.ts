@@ -24,7 +24,7 @@ const initialState = {
     followingInProgress: [] as Array<number>  // когда идет подписка, сюда добавлять id пользователя
 }
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState; // экспорт для теста редюсера
 type ThunkType = BaseThunkType<ActionsType>;
 
 const usersReducer = ( state = initialState, action: ActionsType ): InitialStateType => {
@@ -96,11 +96,16 @@ export const requestUsers = ( page: number, pageSize: number ) => async (dispatc
 export const follow = ( userId: number ): ThunkType => async (dispatch) => {
     dispatch(actions.toggleFollowingInProgress(true, userId));
 
-    const data = await usersAPI.follow(userId);
-    if (data.resultCode === ResultCodesEnum.Success) {
-        dispatch(actions.followSuccess(userId));
+    try {
+        const data = await usersAPI.follow(userId);
+        if (data.resultCode === ResultCodesEnum.Success) {
+            dispatch(actions.followSuccess(userId));
+        }
+        dispatch(actions.toggleFollowingInProgress(false, userId));
     }
-    dispatch(actions.toggleFollowingInProgress(false, userId));
+    catch (e) {
+        alert('error')
+    }
 }
 
 export const unfollow = ( userId: number ): ThunkType => async (dispatch) => {

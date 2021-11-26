@@ -8,7 +8,7 @@ export const usersAPI = {
     },
     follow(userId: number) {
         return instance
-            .post<APIResponseType>(`follow/${userId}`, { })
+            .post<APIResponseType>(`follow/${userId}`)
             .then(res => res.data);
     },
     unfollow(userId: number) {

@@ -1,4 +1,4 @@
-import profileReducer, {addPostActionCreator, deletePost} from "./profile-reducer";
+import profileReducer, {actions} from "./profile-reducer";
 import {expect, it} from "@jest/globals";
 //unit test
 //tdd
@@ -8,7 +8,7 @@ const state = {
 
 it('after deleting length of messages should be decremented', () => {
     // 1.test data
-    const action = deletePost(1);
+    const action = actions.deletePost(1);
 
     // 2.action
     const newState = profileReducer(state, action);
@@ -18,7 +18,7 @@ it('after deleting length of messages should be decremented', () => {
 })
 
 it('message of new post should be correct', () => {
-    const action = addPostActionCreator('testing text');
+    const action = actions.addPostActionCreator('testing text');
     const newState = profileReducer(state, action);
     expect(newState.posts[2].message).toBe('testing text');
 })
