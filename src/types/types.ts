@@ -38,6 +38,11 @@ export type UserType = {
     followed: boolean
 }
 
+export type FilterType = {
+    term: string
+    friend: null | boolean
+}
+
 export type DialogType = {
     id: number
     name: string
