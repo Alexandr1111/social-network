@@ -1,23 +1,19 @@
-import React, {FC, memo} from "react";
+import React, {FC, memo, useEffect} from "react";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
-import {FilterType, UserType} from "../../types/types";
-import {Field, Form, Formik, FormikHelpers, FormikProps, withFormik} from "formik";
+import {FilterType} from "../../types/types";
+import {Field, Form, Formik, FormikHelpers} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    getCurrentPage,
+    getFilter, getFollowingInProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/selectors/users-selectors";
+import {requestUsers, follow, unfollow} from "../../redux/users-reducer";
 
-export type UsersProps = {
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
-    isFetching: boolean
-    filter: FilterType
-
-    onPageChanged: (pageNumber: number) => void
-    users: Array<UserType>
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    followingInProgress: Array<number>
-    onFilterChanged: ( filter: FilterType ) => void
-}
+export type UsersProps = {}
 
 interface FormValuesType {
     term: string
@@ -27,14 +23,14 @@ interface FormValuesType {
 type PropsType = {
     // onSubmit: (userName: string) => void
     filter: FilterType
-    onFilterChanged: ( filter: FilterType ) => void
+    onFilterChanged: (filter: FilterType) => void
 }
 
 const UsersSearchForm: FC<PropsType> = memo((props) => {
-    const initialValues: FormValuesType = { term: '', friend: null };
+    const initialValues: FormValuesType = {term: '', friend: null};
 
     const submit = (values: FilterType, actions: FormikHelpers<FormValuesType>) => {
-        console.log({ values, actions });
+        console.log({values, actions});
         // actions.setSubmitting(false);
         props.onFilterChanged(values);
         // actions.resetForm();
@@ -48,7 +44,7 @@ const UsersSearchForm: FC<PropsType> = memo((props) => {
                 onSubmit={submit}
             >
                 <Form>
-                    <Field type="text" name="term" placeholder="Start typing..." />
+                    <Field type="text" name="term" placeholder="Start typing..."/>
                     <Field name="friend" as="select">
                         <option value="null">All</option>
                         <option value="true">Only followed</option>
@@ -90,21 +86,48 @@ const UsersSearchForm: FC<PropsType> = memo((props) => {
 //     },
 // })(InnerForm);
 
-const Users: FC<UsersProps> =
-    ({totalUsersCount, pageSize, currentPage, onPageChanged, users, follow, unfollow, followingInProgress, filter, onFilterChanged}) => {
+export const Users: FC<UsersProps> = (props) => {
+
+    useEffect(() => {
+        dispatch(requestUsers(currentPage, pageSize, filter));
+    }, [])
+
+    const users = useSelector(getUsers);
+    const totalUsersCount = useSelector(getTotalUsersCount);
+    const currentPage = useSelector(getCurrentPage);
+    const pageSize = useSelector(getPageSize);
+    const filter = useSelector(getFilter);
+    const followingInProgress = useSelector(getFollowingInProgress);
+
+    const dispatch = useDispatch();
+
+    const onPageChanged = (pageNumber: number) => {
+        dispatch(requestUsers(pageNumber, pageSize, filter));
+    }
+
+    const onFilterChanged = (filter: FilterType) => {
+        dispatch(requestUsers(1, pageSize, filter));
+    }
+
+    const followDispatch = (userId: number) => {
+        dispatch(follow(userId));
+    }
+
+    const unfollowDispatch = (userId: number) => {
+        dispatch(unfollow(userId));
+    }
+
     return (
         <div>
-            <UsersSearchForm filter={filter} onFilterChanged={onFilterChanged} />
+            <UsersSearchForm filter={filter} onFilterChanged={onFilterChanged}/>
             <Paginator
                 currentPage={currentPage}
                 onPageChanged={onPageChanged}
                 totalItemsCount={totalUsersCount}
                 pageSize={pageSize}
             />
-            {users.map(u => <User user={u} key={u.id} followingInProgress={followingInProgress} follow={follow}
-                                  unfollow={unfollow}/>)}
+            {users.map(u => <User user={u} key={u.id} followingInProgress={followingInProgress} follow={followDispatch}
+                                  unfollow={unfollowDispatch} />)}
         </div>
     )
 }
-
-export default Users;

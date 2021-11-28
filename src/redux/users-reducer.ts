@@ -112,7 +112,7 @@ export const follow = ( userId: number ): ThunkType => async (dispatch) => {
         dispatch(actions.toggleFollowingInProgress(false, userId));
     }
     catch (e) {
-        alert('error')
+        alert('error');
     }
 }
 

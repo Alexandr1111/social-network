@@ -3,16 +3,15 @@ import Navbar from "./components/Navbar/Navbar";
 import {Route, withRouter} from "react-router-dom";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
-import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginPage from "./components/Login/Login";
+import {LoginPage} from "./components/Login/LoginPage";
 import {initializeApp} from "./redux/app-reducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import Preloader from "./components/common/Preloader/Preloader";
-
-import "./App.css";
 import {AppStateType} from "./redux/redux-store";
+import {UsersPage} from "./components/Users/UsersPage";
+import "./App.css";
 
 const Suspense = (React as any).Suspense;
 const lazy = (React as any).lazy;
@@ -50,7 +49,7 @@ class App extends Component<MapStatePropsType & MapDispatchPropsType> {
                         <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
                         <Route exact path='/dialogs' render={() => <DialogsContainer />}/>
                     </Suspense>
-                    <Route path='/users' render={() => <UsersContainer />}/>
+                    <Route path='/users' render={() => <UsersPage />}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                     <Route path='/login' component={LoginPage}/>

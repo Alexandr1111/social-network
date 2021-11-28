@@ -2,11 +2,11 @@ import React, {FC} from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import { Input } from "../common/FormsControls/FormsControls";
 import { required } from "../../utils/validators/validators";
-import { connect } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import { Redirect } from "react-router-dom";
 import s from "../common/FormsControls/FormsControls.module.css";
-import {AppStateType} from "../../redux/redux-store";
+import {getCaptchaUrl, getIsAuth} from "../../redux/selectors/login-selectors";
 
 const LoginForm: FC<InjectedFormProps<LoginFormValuesType & LoginFormOwnPropsType> & LoginFormOwnPropsType> = ({handleSubmit, error, captchaUrl}) => {
     return (
@@ -42,16 +42,15 @@ type LoginFormOwnPropsType = {
     captchaUrl?: string | null
 }
 
-type MapStatePropsType = {
-    isAuth: boolean
-    captchaUrl: string | null
-}
-
-type MapDispatchPropsType = {
-    login: (email: string, password: string, rememberMe: boolean, captcha: string) => void
-}
-
-type CommonType = LoginFormOwnPropsType & MapStatePropsType & MapDispatchPropsType;
+// type MapStatePropsType = {
+//
+// }
+//
+// type MapDispatchPropsType = {
+//
+// }
+//
+// type CommonType = LoginFormOwnPropsType & MapStatePropsType & MapDispatchPropsType;
 
 // Данные, собираемые формой
 type LoginFormValuesType = {
@@ -61,10 +60,15 @@ type LoginFormValuesType = {
     captcha: string
 }
 
-const Login: FC<CommonType> = ({login, isAuth, captchaUrl}) => {
+export const LoginPage: FC = (props) => {
+
+    const captchaUrl = useSelector(getCaptchaUrl);
+    const isAuth = useSelector(getIsAuth);
+
+    const dispatch = useDispatch();
 
     const onSubmit = ( formData: LoginFormValuesType ) => {
-        login(formData.email, formData.password, formData.rememberMe, formData.captcha);
+        dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha));
     }
 
     if (isAuth) {
@@ -78,12 +82,3 @@ const Login: FC<CommonType> = ({login, isAuth, captchaUrl}) => {
         </div>
     )
 }
-
-const mapStateToProps = ( state: AppStateType ): MapStatePropsType => {
-    return {
-        isAuth: state.auth.isAuth,
-        captchaUrl: state.auth.captchaUrl
-    }
-}
-
-export default connect(mapStateToProps, { login })(Login);

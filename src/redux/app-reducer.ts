@@ -29,7 +29,7 @@ export const actions = {
 }
 
 // @ts-ignore
-export const initializeApp = (): ThunkType => (dispatch) => {
+export const initializeApp = (): ThunkType => async (dispatch) => {
         const promise1 = dispatch(getAuthUserData());
         //dispatch(something)
         Promise.all([promise1])
