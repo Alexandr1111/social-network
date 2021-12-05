@@ -2,14 +2,16 @@ header.header {
     grid-area: header;
     background: green;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    height: 60px;
 }
 
-header.header img {
-    height: 100%;
-    width: 200px;
-}
+/*header.header img {*/
+/*    display: block;*/
+/*    height: 100%;*/
+/*    width: 200px;*/
+/*}*/
 
 .loginBlock {
     padding-right: 10px;

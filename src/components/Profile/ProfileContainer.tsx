@@ -62,7 +62,7 @@ class ProfileContainer extends Component<P> {
             profile={profile}
             status={status}
             updateStatus={updateStatus}
-            isOwner={!(this.props.match.params as any).userId}
+            isOwner={!this.props.match.params.userId}
             savePhoto={savePhoto}
             saveProfile={saveProfile}
             {...restProps}

@@ -12,6 +12,9 @@ import {
     getUsers
 } from "../../redux/selectors/users-selectors";
 import {requestUsers, follow, unfollow} from "../../redux/users-reducer";
+import { useHistory, useLocation } from "react-router-dom";
+import c from './Users.module.css'
+// import queryString from "querystring";
 
 export type UsersProps = {}
 
@@ -37,8 +40,8 @@ const UsersSearchForm: FC<PropsType> = memo((props) => {
     }
 
     return (
-        <div>
-            <h1>Пользователи</h1>
+        <div className={c.form}>
+            <h1 style={{color: '#000003'}}>Пользователи</h1>
             <Formik
                 initialValues={initialValues}
                 onSubmit={submit}
@@ -87,11 +90,6 @@ const UsersSearchForm: FC<PropsType> = memo((props) => {
 // })(InnerForm);
 
 export const Users: FC<UsersProps> = (props) => {
-
-    useEffect(() => {
-        dispatch(requestUsers(currentPage, pageSize, filter));
-    }, [])
-
     const users = useSelector(getUsers);
     const totalUsersCount = useSelector(getTotalUsersCount);
     const currentPage = useSelector(getCurrentPage);
@@ -99,14 +97,49 @@ export const Users: FC<UsersProps> = (props) => {
     const filter = useSelector(getFilter);
     const followingInProgress = useSelector(getFollowingInProgress);
 
+
     const dispatch = useDispatch();
 
-    const onPageChanged = (pageNumber: number) => {
+    const history = useHistory();
+    const { search } = useLocation();
+
+    useEffect(() => {
+        let actualTerm = '';
+        let actualFriend = '';
+        let actualPage = '';
+        if (filter.term) {
+             actualTerm = `term=${filter.term}`;
+        }
+        if (filter.friend) {
+            actualFriend = `$friend=${filter.friend}`;
+        }
+        if (currentPage && currentPage !== 1) {
+            actualPage = `$page=${currentPage}`;
+        }
+        history.push({
+            pathname: '/users',
+            search: `?${actualTerm}${actualFriend}${actualPage}`
+        })
+    }, [filter, currentPage])
+
+    useEffect(() => {
+        // const parsed = queryString.parse(search)    //todo: doesn`t work. why?
+        
+        const parsed = Object.fromEntries(search
+            .slice(1)
+            .split('$')
+            .map(i => i.split('=')));
+
+        dispatch(requestUsers(currentPage, pageSize, filter));
+    }, [])
+
+    const onPageChanged = (e: any, pageNumber: number) => {
         dispatch(requestUsers(pageNumber, pageSize, filter));
     }
 
     const onFilterChanged = (filter: FilterType) => {
         dispatch(requestUsers(1, pageSize, filter));
+        history.push(`${history.location.pathname}/${filter.term}`)
     }
 
     const followDispatch = (userId: number) => {
@@ -118,7 +151,7 @@ export const Users: FC<UsersProps> = (props) => {
     }
 
     return (
-        <div>
+        <div className={c.users}>
             <UsersSearchForm filter={filter} onFilterChanged={onFilterChanged}/>
             <Paginator
                 currentPage={currentPage}

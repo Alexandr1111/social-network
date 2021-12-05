@@ -3,6 +3,7 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import Preloader from "../common/Preloader/Preloader";
 import {ProfileType} from "../../types/types";
+import c from "./ProfileInfo/ProfileInfo.module.css";
 
 export type ProfilePropsType = {
     status: string
@@ -15,7 +16,7 @@ export type ProfilePropsType = {
 
 const Profile: FC<ProfilePropsType> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
     return profile ? (
-        <div>
+        <div className={c.profile}>
             <ProfileInfo
                 profile={profile}
                 isOwner={isOwner}

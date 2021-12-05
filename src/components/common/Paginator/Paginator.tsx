@@ -1,15 +1,17 @@
 import React, {FC, useState} from "react";
 import c from "./Paginator.module.css";
+import {Pagination} from "@mui/material";
 
 type Props = {
     totalItemsCount: number
     pageSize: number
     currentPage: number
-    onPageChanged: (pageNumber: number) => void
+    onPageChanged: (e: any, pageNumber: number) => void
     portionSize?: number
 }
 
 const Paginator: FC<Props> = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
+
     const pagesCount = Math.ceil(totalItemsCount / pageSize);   // При totalUsersCount 19 и pageSize 5 не теряются последние пользователи
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
@@ -23,17 +25,29 @@ const Paginator: FC<Props> = ({totalItemsCount, pageSize, currentPage, onPageCha
 
     return (
         <div className={c.paginator}>
-            {portionNumber > 1 &&
-            <button onClick={() => setPortionNumber(portionNumber - 1)}>
-                PREV
-            </button>}
-            {pages
-                .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
-                .map(p => <span className={`${c.page} ${currentPage === p && c.selectedPage}`} onClick={() => onPageChanged(p)}>{p}</span>)}
-            {portionCount > portionNumber &&
-            <button onClick={() => setPortionNumber(portionNumber + 1)}>
-                NEXT
-            </button>}
+
+            <Pagination
+                showFirstButton
+                showLastButton
+                color="primary"
+                siblingCount={0}
+                page={currentPage}
+                count={pagesCount}
+                onChange={onPageChanged}
+
+            />
+
+            {/*{portionNumber > 1 &&*/}
+            {/*<button onClick={() => setPortionNumber(portionNumber - 1)}>*/}
+            {/*    PREV*/}
+            {/*</button>}*/}
+            {/*{pages*/}
+            {/*    .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)*/}
+            {/*    .map(p => <span className={`${c.page} ${currentPage === p && c.selectedPage}`} onClick={() => onPageChanged(p)}>{p}</span>)}*/}
+            {/*{portionCount > portionNumber &&*/}
+            {/*<button onClick={() => setPortionNumber(portionNumber + 1)}>*/}
+            {/*    NEXT*/}
+            {/*</button>}*/}
         </div>
     )
 }

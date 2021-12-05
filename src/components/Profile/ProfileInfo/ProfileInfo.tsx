@@ -32,7 +32,7 @@ const ProfileInfo: FC<PropsType> = ({profile, status, updateStatus, isOwner, sav
     return (
         <div>
             <div>
-                <img src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt=""/>
+                {/*<img src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt=""/>*/}
             </div>
             <div className={c.descriptionBlock}>
                 <img src={profile.photos.large || user} alt="" className={c.mainPhoto}/>

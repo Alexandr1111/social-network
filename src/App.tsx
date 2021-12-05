@@ -11,6 +11,7 @@ import {compose} from "redux";
 import Preloader from "./components/common/Preloader/Preloader";
 import {AppStateType} from "./redux/redux-store";
 import {UsersPage} from "./components/Users/UsersPage";
+import { Grid, Container } from '@mui/material';
 import "./App.css";
 
 const Suspense = (React as any).Suspense;
@@ -40,21 +41,32 @@ class App extends Component<MapStatePropsType & MapDispatchPropsType> {
         }
 
         return (
-            <div className='app-wrapper'>
-                <HeaderContainer />
-                <Navbar />
-                <div className='app-wrapper-content'>
-                    <Suspense fallback={<Preloader />}>
-                        {/*теперь /profile без парамаетра не открывается, указываем что он не обязателен*/}
-                        <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
-                        <Route exact path='/dialogs' render={() => <DialogsContainer />}/>
-                    </Suspense>
-                    <Route path='/users' render={() => <UsersPage />}/>
-                    <Route path='/news' component={News}/>
-                    <Route path='/music' component={Music}/>
-                    <Route path='/login' component={LoginPage}/>
-                </div>
-            </div>
+            // <div className='app-wrapper'>
+            <Container maxWidth="lg">
+                <Grid container spacing={0}>
+                    <Grid item xs={2}>
+                        <Navbar />
+                    </Grid>
+                    <Grid item xs={10}>
+                        <HeaderContainer />
+                        <Suspense fallback={<Preloader />}>
+                            {/*теперь /profile без парамаетра не открывается, указываем что он не обязателен*/}
+                            <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
+                            <Route exact path='/dialogs' render={() => <DialogsContainer />}/>
+                        </Suspense>
+                        <Route path='/users' render={() => <UsersPage />}/>
+                        <Route path='/news' component={News}/>
+                        <Route path='/music' component={Music}/>
+                        <Route path='/login' component={LoginPage}/>
+                        {/*<Route path='*' render={() => <div>404 NOT FOUND</div>} />*/}
+                    </Grid>
+                </Grid>
+            </Container>
+
+            // <div className='app-wrapper-content'>
+            //
+            //     </div>
+            // </div>
         );
     }
 }

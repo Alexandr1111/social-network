@@ -1,6 +1,5 @@
 import React, {FC} from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../../logo.jpg";
 import s from "./Header.module.css";
 
 type P = {
@@ -12,7 +11,6 @@ type P = {
 const Header: FC<P> = ({isAuth, login, logout}) => {
     return (
         <header className={s.header}>
-            <img src={logo} alt="logo" />
             <div className={s.loginBlock}>
                 {isAuth
                     ? <div style={{display: 'flex', alignItems: 'center'}}>
