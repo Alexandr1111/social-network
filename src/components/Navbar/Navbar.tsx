@@ -26,6 +26,9 @@ const Navbar: FC = () => {
                 <div className={c.item}>
                     <NavLink to="/settings" activeClassName={c.active}>Settings</NavLink>
                 </div>
+                <div className={c.item}>
+                    <NavLink to="/chat" activeClassName={c.active}>Chat</NavLink>
+                </div>
             </nav>
         </div>
     )

@@ -19,6 +19,7 @@ const lazy = (React as any).lazy;
 // в bundle не попадёт, а загрузится по мере необходимости
 const DialogsContainer = lazy( () => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = lazy( () => import('./components/Profile/ProfileContainer'));
+const ChatPage = lazy( () => import('./pages/Chat/ChatPage'));
 
 type MapStatePropsType = ReturnType<typeof mapStateToProps>;
 
@@ -53,6 +54,7 @@ class App extends Component<MapStatePropsType & MapDispatchPropsType> {
                             {/*теперь /profile без парамаетра не открывается, указываем что он не обязателен*/}
                             <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
                             <Route exact path='/dialogs' render={() => <DialogsContainer />}/>
+                            <Route path='/chat' render={() => <ChatPage />}/>
                         </Suspense>
                         <Route path='/users' render={() => <UsersPage />}/>
                         <Route path='/news' component={News}/>
